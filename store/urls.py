@@ -8,4 +8,4 @@ router.register("product", ProductViewSet)
 
 urlpatterns = [path("", include(router.urls))]
 
-app_name = "product"
+app_name = "store"
