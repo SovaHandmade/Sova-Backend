@@ -1,4 +1,8 @@
+import os
+import uuid
+
 from django.db import models
+from django.utils.text import slugify
 
 
 class Topic(models.Model):
@@ -15,9 +19,16 @@ class Form(models.Model):
         return self.name
 
 
+def product_image_file_path(instance, filename):
+    _, extension = os.path.splitext(filename)
+    filename = f"{slugify(instance.title)}-{uuid.uuid4()}{extension}"
+
+    return os.path.join("uploads/movies/", filename)
+
+
 class Product(models.Model):
     name = models.CharField(max_length=255)
-    image = ...
+    image = models.ImageField(null=True, upload_to=product_image_file_path)
     size = models.CharField(max_length=255)
     material = models.CharField(max_length=255)
     color = models.CharField(max_length=255)
