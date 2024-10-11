@@ -26,7 +26,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "material",
             "color",
             "description",
-            "tags",
+            "topic",
+            "form",
             "price",
         )
 
