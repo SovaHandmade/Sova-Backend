@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from store.models import Topic, Form
+
+
+admin.site.register(Topic)
+admin.site.register(Form)
