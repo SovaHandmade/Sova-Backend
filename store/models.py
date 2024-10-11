@@ -33,6 +33,7 @@ class Product(models.Model):
     material = models.CharField(max_length=255)
     color = models.CharField(max_length=255)
     description = models.TextField(blank=False, null=False)
-    tags = models.ManyToManyField(Topic, Form, blank=False, null=False)
+    topic = models.ManyToManyField(Topic, blank=False, null=False)
+    form = models.ManyToManyField(Form, blank=False, null=False)
     price = models.IntegerField()
     in_stock = models.BooleanField(blank=False, null=False, default=False)
