@@ -13,7 +13,7 @@ class TopicViewSet(
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
-    GenericViewSet
+    GenericViewSet,
 ):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
