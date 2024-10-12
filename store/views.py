@@ -27,7 +27,7 @@ class TopicViewSet(
 ):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAdminUser,)
 
 
 class FormViewSet(
@@ -40,7 +40,7 @@ class FormViewSet(
 ):
     queryset = Form.objects.all()
     serializer_class = FormSerializer
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAdminUser,)
 
 
 class ProductViewSet(
