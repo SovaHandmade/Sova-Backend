@@ -39,12 +39,22 @@ class ProductListSerializer(ProductSerializer):
 
 
 class ProductDetailSerializer(ProductSerializer):
-    topic = TopicSerializer(many=False, read_only=True)
-    form = FormSerializer(many=False, read_only=True)
+    topic_name = serializers.CharField(source="topic.name", read_only=True)
+    form_name = serializers.CharField(source="form.name", read_only=True)
 
     class Meta:
         model = Product
-        fields = ("name", "image", "size", "price", "topic", "form")
+        fields = (
+            "name",
+            "image",
+            "size",
+            "color",
+            "material",
+            "description",
+            "topic_name",
+            "form_name",
+            "price",
+        )
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
