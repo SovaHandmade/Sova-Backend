@@ -28,7 +28,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "description",
             "topic",
             "form",
-            "price_display",
+            "price",
         )
 
 
