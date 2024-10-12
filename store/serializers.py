@@ -53,7 +53,7 @@ class ProductDetailSerializer(ProductSerializer):
             "description",
             "topic_name",
             "form_name",
-            "price",
+            "price_display",
         )
 
 
