@@ -3,18 +3,17 @@ import uuid
 
 from django.db import models
 from django.utils.text import slugify
-from djmoney.models.fields import MoneyField
 
 
 class Topic(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=25)
 
     def __str__(self):
         return self.name
 
 
 class Form(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=25)
 
     def __str__(self):
         return self.name
@@ -28,10 +27,10 @@ def product_image_file_path(instance, filename):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=100)
     image = models.ImageField(null=True, upload_to=product_image_file_path)
-    size = models.CharField(max_length=255)
-    material = models.CharField(max_length=255)
+    size = models.CharField(max_length=100)
+    material = models.CharField(max_length=100)
     color = models.CharField(max_length=255)
     description = models.TextField(blank=False, null=False)
     topic = models.ForeignKey(
