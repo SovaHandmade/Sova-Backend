@@ -62,10 +62,10 @@ class ProductViewSet(
         queryset = self.queryset
 
         if form:
-            queryset = queryset.filter(form__icontains=form)
+            queryset = queryset.filter(form__name__icontains=form)
 
         if topic:
-            queryset = queryset.filter(topic__icontains=topic)
+            queryset = queryset.filter(topic__name__icontains=topic)
 
         return queryset.distinct()
 
