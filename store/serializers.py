@@ -28,14 +28,14 @@ class ProductSerializer(serializers.ModelSerializer):
             "description",
             "topic",
             "form",
-            "price",
+            "price_display",
         )
 
 
 class ProductListSerializer(ProductSerializer):
     class Meta:
         model = Product
-        fields = ("name", "image", "size", "price")
+        fields = ("name", "image", "size", "price_display")
 
 
 class ProductDetailSerializer(ProductSerializer):
