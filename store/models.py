@@ -5,18 +5,22 @@ from django.db import models
 from django.utils.text import slugify
 
 
-class Topic(models.Model):
-    name = models.CharField(max_length=25)
+class Tag(models.Model):
+    name = models.CharField(max_length=25, unique=True)
+
+    class Meta:
+        abstract = True
 
     def __str__(self):
         return self.name
 
 
-class Form(models.Model):
-    name = models.CharField(max_length=25)
+class Topic(Tag):
+    pass
 
-    def __str__(self):
-        return self.name
+
+class Form(Tag):
+    pass
 
 
 def product_image_file_path(instance, filename):

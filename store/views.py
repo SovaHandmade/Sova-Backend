@@ -3,44 +3,32 @@ from rest_framework import viewsets, mixins, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
-from store.models import Topic, Form, Product
+from store.models import Topic, Form, Product, Tag
 from store.permissions import IsAdminOrReadOnly
 from store.serializers import (
-    TopicSerializer,
-    FormSerializer,
     ProductSerializer,
     ProductListSerializer,
     ProductDetailSerializer,
     ProductImageSerializer,
+    TopicSerializer,
+    FormSerializer,
 )
 
 
-class TopicViewSet(
-    mixins.CreateModelMixin,
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-    GenericViewSet,
-):
-    queryset = Topic.objects.all()
-    serializer_class = TopicSerializer
-    permission_classes = (IsAdminOrReadOnly,)
+class CombinedView(APIView):
+    def get(self, request, *args, **kwargs):
+        topics = Topic.objects.all()
+        forms = Form.objects.all()
 
+        topics_data = TopicSerializer(topics, many=True).data
+        forms_data = FormSerializer(forms, many=True).data
 
-class FormViewSet(
-    mixins.CreateModelMixin,
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-    GenericViewSet,
-):
-    queryset = Form.objects.all()
-    serializer_class = FormSerializer
-    permission_classes = (IsAdminOrReadOnly,)
+        combined_data = {"topics": topics_data, "forms": forms_data}
+
+        return Response(combined_data)
 
 
 class ProductViewSet(
