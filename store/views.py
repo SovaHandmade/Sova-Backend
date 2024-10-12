@@ -3,6 +3,7 @@ from rest_framework import viewsets, mixins, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
 from store.models import Topic, Form, Product, Tag
@@ -12,57 +13,22 @@ from store.serializers import (
     ProductListSerializer,
     ProductDetailSerializer,
     ProductImageSerializer,
-    TagSerializer,
+    TopicSerializer,
+    FormSerializer,
 )
 
 
-class TagViewSet(viewsets.ModelViewSet):
-    serializer_class = TagSerializer
-    queryset = Tag.objects.all()
+class CombinedView(APIView):
+    def get(self, request, *args, **kwargs):
+        topics = Topic.objects.all()
+        forms = Form.objects.all()
 
-    def get_queryset(self):
-        if self.request.query_params.get("type") == "topic":
-            self.serializer_class.Meta.model = Topic
-            return Topic.objects.all()
-        elif self.request.query_params.get("type") == "form":
-            self.serializer_class.Meta.model = Form
-            return Form.objects.all()
-        else:
-            return None
+        topics_data = TopicSerializer(topics, many=True).data
+        forms_data = FormSerializer(forms, many=True).data
 
-    def perform_create(self, serializer):
-        if self.request.query_params.get("type") == "topic":
-            serializer.save()
-        elif self.request.query_params.get("type") == "form":
-            serializer.save()
+        combined_data = {"topics": topics_data, "forms": forms_data}
 
-
-"""
-class TopicViewSet(
-    mixins.CreateModelMixin,
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-    GenericViewSet,
-):
-    queryset = Topic.objects.all()
-    serializer_class = TopicSerializer
-    permission_classes = (IsAdminUser,)
-
-
-class FormViewSet(
-    mixins.CreateModelMixin,
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-    GenericViewSet,
-):
-    queryset = Form.objects.all()
-    serializer_class = FormSerializer
-    permission_classes = (IsAdminUser,)
-"""
+        return Response(combined_data)
 
 
 class ProductViewSet(

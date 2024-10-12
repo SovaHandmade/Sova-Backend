@@ -1,12 +1,14 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from store.views import ProductViewSet, TagViewSet  # FormViewSet, #TopicViewSet
+from store.views import ProductViewSet, CombinedView
 
 router = routers.DefaultRouter()
 router.register("product", ProductViewSet)
-router.register("tag", TagViewSet)
 
-urlpatterns = [path("", include(router.urls))]
+urlpatterns = [
+    path("", include(router.urls)),
+    path("tags/", CombinedView.as_view(), name="combined-view"),
+]
 
 app_name = "store"
