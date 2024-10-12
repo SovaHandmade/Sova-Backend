@@ -5,18 +5,39 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from store.models import Topic, Form, Product
+from store.models import Topic, Form, Product, Tag
 from store.permissions import IsAdminOrReadOnly
 from store.serializers import (
-    TopicSerializer,
-    FormSerializer,
     ProductSerializer,
     ProductListSerializer,
     ProductDetailSerializer,
     ProductImageSerializer,
+    TagSerializer,
 )
 
 
+class TagViewSet(viewsets.ModelViewSet):
+    serializer_class = TagSerializer
+    queryset = Tag.objects.all()
+
+    def get_queryset(self):
+        if self.request.query_params.get("type") == "topic":
+            self.serializer_class.Meta.model = Topic
+            return Topic.objects.all()
+        elif self.request.query_params.get("type") == "form":
+            self.serializer_class.Meta.model = Form
+            return Form.objects.all()
+        else:
+            return None
+
+    def perform_create(self, serializer):
+        if self.request.query_params.get("type") == "topic":
+            serializer.save()
+        elif self.request.query_params.get("type") == "form":
+            serializer.save()
+
+
+"""
 class TopicViewSet(
     mixins.CreateModelMixin,
     mixins.ListModelMixin,
@@ -41,6 +62,7 @@ class FormViewSet(
     queryset = Form.objects.all()
     serializer_class = FormSerializer
     permission_classes = (IsAdminUser,)
+"""
 
 
 class ProductViewSet(

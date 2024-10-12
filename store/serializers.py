@@ -1,18 +1,12 @@
 from rest_framework import serializers
 
-from store.models import Topic, Form, Product
+from store.models import Topic, Form, Product, Tag
 
 
-class TopicSerializer(serializers.ModelSerializer):
+class TagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Topic
-        fields = ("id", "name")
-
-
-class FormSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Form
-        fields = ("id", "name")
+        model = None
+        fields = ["id", "name"]
 
 
 class ProductSerializer(serializers.ModelSerializer):
