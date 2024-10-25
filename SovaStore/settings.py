@@ -134,3 +134,5 @@ MEDIA_ROOT = "uploads/media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "user.User"
+
+PHONENUMBER_DEFAULT_REGION = "UA"
