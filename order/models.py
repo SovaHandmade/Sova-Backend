@@ -5,21 +5,18 @@ from store.models import Product
 
 
 class Order(models.Model):
-    class StatusChoicesCustomer(models.TextChoices):
+    class StatusChoices(models.TextChoices):
         PROCESSING = "Processing"
         IN_PROCESS = "In process"
         DONE = "Done"
 
-    class StatusChoicesAdmin(models.TextChoices):
-        NEW = "New"
-        IN_PROCESS = "In process"
-        DONE = "Done"
-
     date = models.DateField(auto_now_add=True)
-    status_user = models.CharField(
-        max_length=100, choices=StatusChoicesCustomer.choices
+    status = models.CharField(
+        max_length=100,
+        choices=StatusChoices.choices,
+        default=StatusChoices.PROCESSING,
+        editable=False,
     )
-    status_admin = models.CharField(max_length=100, choices=StatusChoicesAdmin.choices)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="orders"
     )
