@@ -15,7 +15,6 @@ class Order(models.Model):
         max_length=100,
         choices=StatusChoices.choices,
         default=StatusChoices.PROCESSING,
-        editable=False,
     )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="orders"
