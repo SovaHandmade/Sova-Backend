@@ -1,5 +1,4 @@
 from django.db.models import Sum, ExpressionWrapper, F, IntegerField, Prefetch
-from django.shortcuts import render
 from rest_framework import mixins
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
@@ -15,22 +14,7 @@ class ReservationPagination(PageNumberPagination):
 
 
 class OrderViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, GenericViewSet):
-    queryset = Order.objects.annotate(
-        total=Sum(
-            ExpressionWrapper(
-                F("product.price") * F("quantity"), output_field=IntegerField()
-            )
-        ),
-    ).prefetch_related(
-        Prefetch(
-            "items",
-            queryset=OrderItem.objects.annotate(
-                total=ExpressionWrapper(
-                    F("product.price") * F("quantity"), output_field=IntegerField()
-                )
-            ),
-        )
-    )
+    queryset = Order.objects.select_related("items")
     serializer_class = OrderSerializer
     pagination_class = ReservationPagination
     permission_classes = (IsAuthenticated,)
