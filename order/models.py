@@ -33,12 +33,14 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="items")
+    product_id = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="items"
+    )
     quantity = models.PositiveIntegerField(default=1)
 
     @property
     def total_price(self):
-        return self.product.price * self.quantity
+        return self.product_id.price * self.quantity
 
     def __str__(self):
-        return f"{self.product.name} x {self.quantity} for {self.order}"
+        return f"{self.product_id.name} x {self.quantity} for {self.order}"
