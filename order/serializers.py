@@ -3,14 +3,21 @@ from rest_framework import serializers
 from order.models import Order, OrderItem
 
 
+class OrderItemSerializer(serializers.ModelSerializer):
+    total_price = serializers.ReadOnlyField()
+
+    class Meta:
+        model = OrderItem
+        fields = ("id", "product", "quantity", "total_price")
+
+
 class OrderSerializer(serializers.ModelSerializer):
-    products = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=OrderItem.objects.all()
-    )
+    total_price = serializers.ReadOnlyField()
+    items = OrderItemSerializer(many=True, read_only=True)
 
     class Meta:
         model = Order
-        fields = ("id", "date", "status", "user", "products", "total_price")
+        fields = ("id", "date", "status", "user", "items", "total_price")
 
 
 class OrderCreateSerializer(serializers.ModelSerializer):
