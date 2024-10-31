@@ -14,7 +14,7 @@ class ReservationPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class OrderListView(mixins.CreateModelMixin, mixins.ListModelMixin, GenericViewSet):
+class OrderViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, GenericViewSet):
     queryset = Order.objects.annotate(
         total=Sum(
             ExpressionWrapper(
