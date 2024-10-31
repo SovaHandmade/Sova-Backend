@@ -23,6 +23,10 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.user} - {self.date}"
 
+    @property
+    def total_price(self):
+        return sum(item.total_price for item in self.items.all())
+
     class Meta:
         ordering = ("-date",)
 
@@ -31,3 +35,10 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="items")
     quantity = models.PositiveIntegerField(default=1)
+
+    @property
+    def total_price(self):
+        return self.product.price * self.quantity
+
+    def __str__(self):
+        return f"{self.product.name} x {self.quantity} for {self.order}"
