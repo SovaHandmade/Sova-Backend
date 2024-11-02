@@ -32,7 +32,9 @@ urlpatterns = [
     path("api/user/", include("user.urls", namespace="user")),
     path("api/order/", include("order.urls", namespace="order")),
     path(
-        "api/password-reset/", auth_views.PasswordResetView.as_view(), name="password_reset"
+        "api/password-reset/",
+        auth_views.PasswordResetView.as_view(),
+        name="password_reset",
     ),
     path(
         "api/password-reset/done/",
