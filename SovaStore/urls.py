@@ -27,36 +27,36 @@ from drf_spectacular.views import (
 )
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("store/", include("store.urls", namespace="store")),
-    path("user/", include("user.urls", namespace="user")),
-    path("order/", include("order.urls", namespace="order")),
+    path("api/admin/", admin.site.urls),
+    path("api/store/", include("store.urls", namespace="store")),
+    path("api/user/", include("user.urls", namespace="user")),
+    path("api/order/", include("order.urls", namespace="order")),
     path(
-        "password-reset/", auth_views.PasswordResetView.as_view(), name="password_reset"
+        "api/password-reset/", auth_views.PasswordResetView.as_view(), name="password_reset"
     ),
     path(
-        "password-reset/done/",
+        "api/password-reset/done/",
         auth_views.PasswordResetDoneView.as_view(),
         name="password_reset_done",
     ),
     path(
-        "reset/<uidb64>/<token>/",
+        "api/reset/<uidb64>/<token>/",
         auth_views.PasswordResetConfirmView.as_view(),
         name="password_reset_confirm",
     ),
     path(
-        "reset/done/",
+        "api/reset/done/",
         auth_views.PasswordResetCompleteView.as_view(),
         name="password_reset_complete",
     ),
-    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
-        "schema/swagger-ui/",
+        "api/schema/swagger-ui/",
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui",
     ),
     path(
-        "schema/redoc/",
+        "api/schema/redoc/",
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
