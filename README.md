@@ -13,7 +13,7 @@ This is backend for API service "Sova Store"
 ## Components
 
 - Store Service :
-  - Managing books amount (CRUD for Books)
+  - Managing products
   - API:
     - POST:```product/``` - add new product
     - GET:```product/```  - get a list of products
