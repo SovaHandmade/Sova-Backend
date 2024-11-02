@@ -18,8 +18,8 @@ from store.serializers import (
 )
 
 
-class CombinedView(APIView):
-    def get(self, request, *args, **kwargs):
+class CombinedViewSet(viewsets.ViewSet):
+    def list(self, request):
         topics = Topic.objects.all()
         forms = Form.objects.all()
 
