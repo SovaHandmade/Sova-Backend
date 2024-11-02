@@ -47,7 +47,7 @@ This is backend for API service "Sova Store"
 1. Clone the repository
  ```shell
   git clone https://github.com/SovaHandmade/Sova-Backend.git
-  cd SovaStore
+  cd Sova-Backend
 ```
 
 2. Create a virtual environment and activate it
