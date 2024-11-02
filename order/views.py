@@ -3,7 +3,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 
 from order.models import Order, OrderItem
-from order.serializers import OrderSerializer, OrderItemSerializer
+from order.serializers import (
+    OrderSerializer,
+    OrderItemSerializer,
+    OrderItemCreateSerializer,
+)
 
 
 class OrderViewSet(
@@ -38,6 +42,15 @@ class OrderItemViewSet(
     mixins.DestroyModelMixin,
     GenericViewSet,
 ):
-    queryset = OrderItem.objects.select_related("items")
+    queryset = OrderItem.objects.select_related("order", "product_id")
     serializer_class = OrderItemSerializer
     permission_classes = (IsAuthenticated,)
+
+    def get_serializer_class(self):
+        if self.action == "retrieve":
+            return OrderItemSerializer
+
+        if self.action == "create":
+            return OrderItemCreateSerializer
+
+        return OrderItemSerializer
