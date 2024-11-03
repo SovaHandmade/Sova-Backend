@@ -14,7 +14,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 class OrderItemCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
-        fields = ["order", "product_id", "quantity"]
+        fields = ("product_id", "quantity")
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -27,10 +27,19 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class OrderCreateSerializer(serializers.ModelSerializer):
-    products = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=OrderItem.objects.all()
-    )
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+    items = OrderItemCreateSerializer(many=True)
 
     class Meta:
         model = Order
-        fields = ("id", "date", "user", "products")
+        fields = ("id", "date", "user", "items")
+
+    def create(self, validated_data):
+        items_data = validated_data.pop("items")
+
+        order = Order.objects.create(**validated_data)
+
+        for item_data in items_data:
+            OrderItem.objects.create(order=order, **item_data)
+
+        return order
