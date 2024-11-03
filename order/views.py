@@ -7,6 +7,7 @@ from order.serializers import (
     OrderSerializer,
     OrderItemSerializer,
     OrderItemCreateSerializer,
+    OrderCreateSerializer,
 )
 
 
@@ -29,6 +30,11 @@ class OrderViewSet(
             return queryset
 
         return queryset.filter(user=user)
+
+    def get_serializer_class(self):
+        if self.action == "create":
+            return OrderCreateSerializer
+        return OrderSerializer
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
