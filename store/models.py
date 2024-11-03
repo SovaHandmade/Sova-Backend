@@ -51,12 +51,8 @@ class Product(models.Model):
         blank=True,
         related_name="products",
     )
-    price = models.IntegerField(default=0)
+    price = models.PositiveIntegerField(default=0)
     in_stock = models.BooleanField(blank=False, null=False, default=False)
 
     def __str__(self):
         return self.name + " - " + self.size
-
-    @property
-    def price_display(self):
-        return f"{self.price} grn"
