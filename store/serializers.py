@@ -35,7 +35,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductListSerializer(ProductSerializer):
     class Meta:
         model = Product
-        fields = ("name", "image", "size", "price_display")
+        fields = ("name", "image", "size", "price")
 
 
 class ProductDetailSerializer(ProductSerializer):
@@ -53,7 +53,7 @@ class ProductDetailSerializer(ProductSerializer):
             "description",
             "topic_name",
             "form_name",
-            "price_display",
+            "price",
         )
 
 
