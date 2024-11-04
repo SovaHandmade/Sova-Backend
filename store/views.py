@@ -1,14 +1,12 @@
-from django.shortcuts import render
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets, mixins, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
-from store.models import Topic, Form, Product, Tag
+from store.models import Topic, Form, Product
 from store.permissions import IsAdminOrReadOnly
 from store.serializers import (
     ProductSerializer,
