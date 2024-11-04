@@ -46,6 +46,8 @@ class ProductViewSet(
     def get_queryset(self):
         form = self.request.query_params.get("form")
         topic = self.request.query_params.get("topic")
+        exclude = self.request.query_params.get("exclude")
+        max_length = self.request.query_params.get("max_length")
 
         queryset = self.queryset
 
@@ -55,7 +57,16 @@ class ProductViewSet(
         if topic:
             queryset = queryset.filter(topic__name__icontains=topic)
 
-        return queryset.distinct()
+        if exclude:
+            queryset = queryset.exclude(id__in=exclude)
+
+        queryset = queryset.distinct()
+
+        if max_length:
+            max_length = int(max_length)
+            queryset = queryset[:max_length]
+
+        return queryset
 
     def get_serializer_class(self):
         if self.action == "list":
