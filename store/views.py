@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets, mixins, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser
@@ -46,6 +48,8 @@ class ProductViewSet(
     def get_queryset(self):
         form = self.request.query_params.get("form")
         topic = self.request.query_params.get("topic")
+        exclude = self.request.query_params.get("exclude")
+        max_length = self.request.query_params.get("max_length")
 
         queryset = self.queryset
 
@@ -55,7 +59,16 @@ class ProductViewSet(
         if topic:
             queryset = queryset.filter(topic__name__icontains=topic)
 
-        return queryset.distinct()
+        if exclude:
+            queryset = queryset.exclude(id__in=exclude)
+
+        queryset = queryset.distinct()
+
+        if max_length:
+            max_length = int(max_length)
+            queryset = queryset[:max_length]
+
+        return queryset
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -85,3 +98,30 @@ class ProductViewSet(
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "form",
+                type=OpenApiTypes.STR,
+                description="Filter by form (ex. ?form=підсвічник)",
+            ),
+            OpenApiParameter(
+                "topic",
+                type=OpenApiTypes.STR,
+                description="Filter by topic (ex. ?topic=весна)",
+            ),
+            OpenApiParameter(
+                "max_length",
+                type=OpenApiTypes.INT,
+                description="Limit length of queryset (ex. max_length=5)"
+            ),
+            OpenApiParameter(
+                "exclude",
+                type=OpenApiTypes.INT,
+                description="Get queryset except one product (ex. exclude=1)"
+            )
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
