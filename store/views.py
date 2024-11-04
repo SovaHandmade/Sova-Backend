@@ -112,13 +112,13 @@ class ProductViewSet(
             OpenApiParameter(
                 "max_length",
                 type=OpenApiTypes.INT,
-                description="Limit length of queryset (ex. max_length=5)"
+                description="Limit length of queryset (ex. max_length=5)",
             ),
             OpenApiParameter(
                 "exclude",
                 type=OpenApiTypes.INT,
-                description="Get queryset except one product (ex. exclude=1)"
-            )
+                description="Get queryset except one product (ex. exclude=1)",
+            ),
         ]
     )
     def list(self, request, *args, **kwargs):
