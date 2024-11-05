@@ -25,10 +25,10 @@ class UserSerializer(serializers.ModelSerializer):
             user.set_password(password)
             user.save()
         if phone_number:
-            user.set_phone_number(phone_number)
+            user.phone_number = phone_number
             user.save()
         if full_name:
-            user.set_full_name(full_name)
+            user.full_name = full_name
             user.save()
         if email:
             user.email = email
