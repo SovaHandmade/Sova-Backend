@@ -34,6 +34,7 @@ ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
 INTERNAL_IPS = os.environ["INTERNAL_IPS"].split(",")
 
+CSRF_TRUSTED_ORIGINS = os.environ["CSRF_TRUSTED_ORIGINS"].split(",")
 
 # Application definition
 
