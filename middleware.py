@@ -21,6 +21,7 @@ class CorsMiddleware(object):
         elif "*" in allowed_origins:
             response["Access-Control-Allow-Origin"] = "*"
 
+        response["Access-Control-Allow-Credentials"] = 'true'
         response["Access-Control-Allow-Methods"] = (
             "DELETE, GET, OPTIONS, PATCH, POST, PUT"
         )
