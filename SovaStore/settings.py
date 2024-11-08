@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "corsheaders",
     "django_rest_passwordreset",
+    "user.apps.UserConfig",
     "store",
     "user",
     "order",
