@@ -31,26 +31,6 @@ urlpatterns = [
     path("api/store/", include("store.urls", namespace="store")),
     path("api/user/", include("user.urls", namespace="user")),
     path("api/order/", include("order.urls", namespace="order")),
-    path(
-        "api/password-reset/",
-        auth_views.PasswordResetView.as_view(),
-        name="password_reset",
-    ),
-    path(
-        "api/password-reset/done/",
-        auth_views.PasswordResetDoneView.as_view(),
-        name="password_reset_done",
-    ),
-    path(
-        "api/reset/<uidb64>/<token>/",
-        auth_views.PasswordResetConfirmView.as_view(),
-        name="password_reset_confirm",
-    ),
-    path(
-        "api/reset/done/",
-        auth_views.PasswordResetCompleteView.as_view(),
-        name="password_reset_complete",
-    ),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/schema/swagger-ui/",
