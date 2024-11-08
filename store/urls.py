@@ -9,6 +9,10 @@ router.register("tags", CombinedViewSet, basename="combined")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path(
+        "password_reset/",
+        include("django_rest_passwordreset.urls", namespace="password_reset"),
+    ),
 ]
 
 app_name = "store"
