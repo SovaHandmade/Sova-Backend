@@ -16,10 +16,6 @@ urlpatterns = [
     path("token-renew/", TokenRefreshView.as_view(), name="token_refresh"),
     path("me/", ManageUserView.as_view(), name="manage"),
     path("", include(router.urls)),
-    path(
-        "password_reset/",
-        include("django_rest_passwordreset.urls", namespace="password_reset"),
-    ),
 ]
 
 app_name = "user"
