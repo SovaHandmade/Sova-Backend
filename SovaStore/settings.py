@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "drf_spectacular",
     "corsheaders",
+    "django_rest_passwordreset",
     "store",
     "user",
     "order",
