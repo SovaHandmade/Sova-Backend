@@ -93,11 +93,11 @@ WSGI_APPLICATION = "SovaStore.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        'NAME': os.environ["NAME"],
-        'USER': os.environ["USER"],
-        'PASSWORD': os.environ["PASSWORD"],
-        'HOST': os.environ["HOST"],
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.environ["NAME"],
+        "USER": os.environ["USER"],
+        "PASSWORD": os.environ["PASSWORD"],
+        "HOST": os.environ["HOST"],
         "PORT": "3306",
     }
 }
