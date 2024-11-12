@@ -141,7 +141,7 @@ STATIC_URL = "static/"
 STATIC_ROOT = "staticfiles/"
 
 MEDIA_URL = "media/"
-MEDIA_ROOT = "uploads/media/"
+MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
