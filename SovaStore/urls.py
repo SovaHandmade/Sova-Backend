@@ -16,9 +16,10 @@ Including another URLconf
 """
 
 from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include, re_path
-from django.views.static import serve
+from django.urls import path, include
+from django.contrib.auth import views as auth_views
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularSwaggerView,
@@ -45,11 +46,4 @@ urlpatterns = [
         "api/auth/reset/",
         include("django_rest_passwordreset.urls", namespace="password_reset"),
     ),
-    re_path(
-        r"^media/(?P<path>.*)$",
-        serve,
-        {
-            "document_root": settings.MEDIA_ROOT,
-        },
-    ),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
