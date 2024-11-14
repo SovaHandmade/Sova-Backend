@@ -1,3 +1,5 @@
+import os
+
 from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
 from django.template.loader import render_to_string
@@ -26,9 +28,7 @@ def password_reset_token_created(
         "full_name": reset_password_token.user.full_name,
         "email": reset_password_token.user.email,
         "reset_password_url": "{}{}".format(
-            instance.request.build_absolute_uri(
-                reverse("password_reset:reset-password-request")
-            ),
+            os.environ["PASSWORD_RESET_BASE"],
             reset_password_token.key,
         ),
     }
