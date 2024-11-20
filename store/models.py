@@ -1,6 +1,6 @@
 import os
 import uuid
-
+from PIL import Image
 from django.db import models
 from django.utils.text import slugify
 
@@ -53,6 +53,23 @@ class Product(models.Model):
     )
     price = models.PositiveIntegerField(default=0)
     in_stock = models.BooleanField(blank=False, null=False, default=False)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.image.path)
+
+        width, height = img.size
+
+        new_side = min(width, height)
+
+        left = (width - new_side) // 2
+        top = (height - new_side) // 2
+        right = (width + new_side) // 2
+        bottom = (height + new_side) // 2
+
+        img = img.crop((left, top, right, bottom))
+        img.save(self.image.path, optimize=True, quality=85)
 
     def __str__(self):
         return self.name + " - " + self.size
