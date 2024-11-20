@@ -7,7 +7,7 @@ class UserManager(BaseUserManager):
         Creates and saves a User with the given email and password.
         """
         if not email:
-            raise ValueError("Users must have an email address")
+            raise ValueError("У користувача має бути електронна пошта")
 
         user = self.model(email=self.normalize_email(email), **extra_fields)
 
