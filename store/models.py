@@ -61,12 +61,20 @@ class Product(models.Model):
 
         width, height = img.size
 
-        new_side = min(width, height)
+        target_ratio = 3 / 4
 
-        left = (width - new_side) // 2
-        top = (height - new_side) // 2
-        right = (width + new_side) // 2
-        bottom = (height + new_side) // 2
+        if width / height > target_ratio:
+            new_width = int(height * target_ratio)
+            left = (width - new_width) // 2
+            top = 0
+            right = (width + new_width) // 2
+            bottom = height
+        else:
+            new_height = int(width / target_ratio)
+            left = 0
+            top = (height - new_height) // 2
+            right = width
+            bottom = (height + new_height) // 2
 
         img = img.crop((left, top, right, bottom))
         img.save(self.image.path, optimize=True, quality=85)
