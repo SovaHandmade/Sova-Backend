@@ -82,3 +82,8 @@ You also can register new non-admin user using ```user/register/```
 
 You also need to obtain token in ```user/login/``` page
 
+# Used technologies
+- Python
+- Django ORM
+- Django REST Framework
+- HTML
