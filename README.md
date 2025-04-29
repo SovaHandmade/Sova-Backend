@@ -1,6 +1,6 @@
 # Sova Store Backend
 
-This is backend for API service "Sova Store"
+API for online shop "Sova Handmade"
 
 ## Features
 
